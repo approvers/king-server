@@ -9,54 +9,24 @@ public class AngryPresenter : DiscordMessagePresenterBase
     {
         var messageContent = Message.Content.ToLower();
 
-        // まず通常のマッチを確認
+        // Angryは実際に含まれる語だけで反応させる
         var matchedAngry = MasterManager.IssoAngryMaster
             .GetAll(angry => messageContent.Contains(angry.Key.ToLower()))
             .OrderByDescending(angry => angry.Order)
             .FirstOrDefault();
 
-        if (matchedAngry != null)
+        if (matchedAngry == null)
         {
-            // 通常マッチがあればそのメッセージを返して終了
-            await SendAngryReplyAsync(matchedAngry);
             return;
         }
 
-        // 何も引っ掛からなかった場合、ミスリード抽選を行う
-        var misleadAngry = TryMisleadLottery();
-        if (misleadAngry != null)
-        {
-            await SendAngryReplyAsync(misleadAngry);
-        }
+        await SendAngryReplyAsync(matchedAngry);
     }
 
     private async Task SendAngryReplyAsync(IssoAngry angry)
     {
         var replyMessage = $"今 ***\"{angry.Word}\"*** って言ったか？{MasterManager.IssoSettingMaster.CommonAngryFormat}";
         await SendReplyAsync(replyMessage);
-    }
-
-    /// <summary>
-    /// ミスリード抽選を行い、当たったエントリを返す（外れた場合はnull）
-    /// orderが大きい順に各エントリを独立して千分率で判定し、最初にHitしたものを返す
-    /// </summary>
-    private static IssoAngry? TryMisleadLottery()
-    {
-        var candidates = MasterManager.IssoAngryMaster
-            .GetAll()
-            .Where(angry => angry.MisleadPermillage > 0)
-            .OrderByDescending(angry => angry.Order);
-
-        foreach (var angry in candidates)
-        {
-            var probability = Multiplier.FromPermillage(angry.MisleadPermillage);
-            if (RandomManager.IsHit(probability))
-            {
-                return angry;
-            }
-        }
-
-        return null;
     }
 
     private async Task SendReplyAsync(string message)

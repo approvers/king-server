@@ -33,9 +33,6 @@ public class MasterManager : Singleton<MasterManager>
     [field: MasterTable("eyes_setting")] private EyesSettingMaster _eyesSettingMaster;
     public static EyesSettingMaster EyesSettingMaster => Instance._eyesSettingMaster;
 
-    [field: MasterTable("you_setting")] private YouSettingMaster _youSettingMaster;
-    public static YouSettingMaster YouSettingMaster => Instance._youSettingMaster;
-
     [field: MasterTable("loxy_setting")] private LoxySettingMaster _loxySettingMaster;
     public static LoxySettingMaster LoxySettingMaster => Instance._loxySettingMaster;
 

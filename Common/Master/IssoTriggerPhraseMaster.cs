@@ -11,7 +11,6 @@ public enum TriggerType
     Unknown,
     GachaExecute,
     GachaGet,
-    Marugame,
     GachaRanking,
     SlotExecute,
     SlotRanking,

@@ -74,11 +74,6 @@ public class IssoBotInstance : DiscordBotInstanceBase
                 return;
             }
 
-            if (TryExecuteMarugame(userMessage))
-            {
-                return;
-            }
-
             if (IsContainsTriggerPhrase(userMessage.Content, TriggerType.GachaRanking))
             {
                 // ガチャランキングの表示
@@ -130,34 +125,9 @@ public class IssoBotInstance : DiscordBotInstanceBase
         if (isUtilOnlyChannel) return;
 
         // 全メッセージでAngryPresenterをトリガー
-        // （通常マッチ・ミスリード抽選の判定はAngryPresenter内で行う）
+        // 実際に含まれる語だけAngryPresenter内で反応させる
         ExecuteMessageEventAsync<AngryPresenter>(userMessage).Run();
     }
-
-    private bool TryExecuteMarugame(SocketUserMessage userMessage)
-    {
-        // 「丸亀製麺」の次にある改行以降が対象
-        var marugameTrigger =
-            MasterManager.IssoTriggerPhraseMaster.FirstOrDefault(x => x.TriggerType == TriggerType.Marugame)?.Phrase ?? "";
-
-        var marugameIndex =
-            userMessage.Content.IndexOf(marugameTrigger, StringComparison.InvariantCulture);
-        if (marugameIndex < 0) return false;
-
-        var subs = userMessage.Content[(marugameIndex + marugameTrigger.Length)..];
-        var contentIndex = subs.IndexOf('\n');
-        if (contentIndex < 0) return false;
-
-        // 丸亀製麺
-        ExecuteMessageEventAsync<MarugamePresenter>(userMessage, presenter =>
-        {
-            presenter.Content = subs[(contentIndex + 1)..];
-            return Task.CompletedTask;
-        }).Run();
-
-        return true;
-    }
-
 
     private void OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState before, SocketVoiceState after)
     {

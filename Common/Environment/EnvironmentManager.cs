@@ -14,7 +14,6 @@ public class EnvironmentManager
     public static string DiscordSecretIsso => Get("DiscordSecretIsso");
     public static string DiscordSecretEyes => Get("DiscordSecretEyes");
     public static string DiscordSecretLoxy => Get("DiscordSecretLoxy");
-    public static string DiscordSecretIchiyo => Get("DiscordSecretIchiyo");
     public static ulong DiscordTargetGuildId => ulong.Parse(Get("DiscordTargetGuildId"));
     public static ulong DiscordMainChannelId => ulong.Parse(Get("DiscordMainChannelId"));
     public static string GoogleCredentialFilePath => Get("GoogleCredentialFilePath");

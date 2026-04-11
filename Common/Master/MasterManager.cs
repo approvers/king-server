@@ -35,12 +35,6 @@ public class MasterManager : Singleton<MasterManager>
 
     [field: MasterTable("loxy_setting")] private LoxySettingMaster _loxySettingMaster;
     public static LoxySettingMaster LoxySettingMaster => Instance._loxySettingMaster;
-
-    [field: MasterTable("ichiyo_setting")] private IchiyoSettingMaster _ichiyoSettingMaster;
-    public static IchiyoSettingMaster IchiyoSettingMaster => Instance._ichiyoSettingMaster;
-
-    [field: MasterTable("ichiyo_user")] private IchiyoUserMaster _ichiyoUserMaster;
-    public static IchiyoUserMaster IchiyoUserMaster => Instance._ichiyoUserMaster;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS0649 // Field is never assigned to, and will always have its default value
 

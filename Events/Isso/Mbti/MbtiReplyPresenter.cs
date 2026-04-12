@@ -7,8 +7,7 @@ public partial class MbtiReplyPresenter : DiscordMessagePresenterBase
 {
     protected override async Task MainAsync()
     {
-        var mbti = FindMbtiType(Message.Content);
-        if (mbti == null)
+        if (ContainsMbtiType(Message.Content) == false)
         {
             return;
         }
@@ -18,27 +17,15 @@ public partial class MbtiReplyPresenter : DiscordMessagePresenterBase
             return;
         }
 
-        var master = MasterManager.IssoMbtiMaster.Find(mbti);
-        if (master == null)
-        {
-            return;
-        }
-
-        await SendReplyAsync(master.Message);
+        await SendReplyAsync(MasterManager.IssoSettingMaster.MbtiReplyMessage);
         AppCache.Instance.IssoMbtiLastReplyTimesByChannelId[Message.Channel.Id] = TimeManager.GetNow();
     }
 
-    // 余計な記法を除去してマスタキーへ正規化する
-    private static string? FindMbtiType(string content)
+    // MBTI表記が含まれるかだけを判定して返信条件を一本化する
+    private static bool ContainsMbtiType(string content)
     {
         var match = MbtiRegex().Match(content);
-        if (match.Success == false)
-        {
-            return null;
-        }
-
-        var value = match.Groups["mbti"].Value;
-        return value.ToUpper();
+        return match.Success;
     }
 
     // チャンネル単位で最終返信時刻を見て投稿頻度を制御する
@@ -65,6 +52,6 @@ public partial class MbtiReplyPresenter : DiscordMessagePresenterBase
         }
     }
 
-    [GeneratedRegex(@"\b(?<mbti>[EI][NS][FT][JP])(?:-[AT])?\b", RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"\b[EI][NS][FT][JP](?:-[AT])?\b", RegexOptions.IgnoreCase)]
     private static partial Regex MbtiRegex();
 }

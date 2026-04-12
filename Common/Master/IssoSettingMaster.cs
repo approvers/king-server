@@ -157,4 +157,9 @@ public class IssoSettingMaster : MasterTable<string, Setting>
     ///MBTI返信のチャンネル単位クールタイム(ms)
     /// </summary>
     public int MbtiReplyCooldownDuration => GetInt(nameof(MbtiReplyCooldownDuration));
+
+    /// <summary>
+    ///MBTI返信で使う共通解説メッセージ
+    /// </summary>
+    public string MbtiReplyMessage => GetString(nameof(MbtiReplyMessage));
 }

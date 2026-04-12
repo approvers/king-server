@@ -124,6 +124,9 @@ public class IssoBotInstance : DiscordBotInstanceBase
         // util_onlyチャンネルの場合、メンションなしの機能をスキップ
         if (isUtilOnlyChannel) return;
 
+        // MBTI表記がある投稿へ解説を返す
+        ExecuteMessageEventAsync<MbtiReplyPresenter>(userMessage).Run();
+
         // 全メッセージでAngryPresenterをトリガー
         // 実際に含まれる語だけAngryPresenter内で反応させる
         ExecuteMessageEventAsync<AngryPresenter>(userMessage).Run();

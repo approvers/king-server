@@ -4,4 +4,5 @@ public class AppCache : Singleton<AppCache>
 {
     public DateTime? LoxyLastTranslateTime { get; set; }
     public DateTime? LoxyLastJpToEnTranslateTime { get; set; }
+    public Dictionary<ulong, DateTime> IssoMbtiLastReplyTimesByChannelId { get; } = [];
 }

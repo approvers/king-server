@@ -152,4 +152,9 @@ public class IssoSettingMaster : MasterTable<string, Setting>
     /// 汎用的な怒り表現のフォーマット
     /// </summary>
     public string CommonAngryFormat => GetString(nameof(CommonAngryFormat));
+
+    /// <summary>
+    ///MBTI返信のチャンネル単位クールタイム(ms)
+    /// </summary>
+    public int MbtiReplyCooldownDuration => GetInt(nameof(MbtiReplyCooldownDuration));
 }

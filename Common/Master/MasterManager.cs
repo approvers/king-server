@@ -21,6 +21,9 @@ public class MasterManager : Singleton<MasterManager>
     [MasterTable("isso_trigger_phrase")] private IssoTriggerPhraseMaster _issoTriggerPhraseMaster;
     public static IssoTriggerPhraseMaster IssoTriggerPhraseMaster => Instance._issoTriggerPhraseMaster;
 
+    [MasterTable("isso_mbti")] private IssoMbtiMaster _issoMbtiMaster;
+    public static IssoMbtiMaster IssoMbtiMaster => Instance._issoMbtiMaster;
+
     [MasterTable("isso_slot_item")] private IssoSlotItemMaster _issoSlotItemMaster;
     public static IssoSlotItemMaster IssoSlotItemMaster => Instance._issoSlotItemMaster;
 
